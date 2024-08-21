@@ -1,0 +1,99 @@
+
+<form [formGroup]="clientForm" class="min-h-screen flex-auto flex item-center justify-center">
+
+<div class="row">
+    <mat-form-field class="col">
+        <mat-label>Enter your Name</mat-label>
+        <input formControlName="powerName" matInput name="powerName" >
+        <mat-error *ngIf="clientForm.get('powerName').hasError('required')">Power Name Is Required</mat-error>
+      </mat-form-field>
+      
+       
+      <mat-form-field class="col">
+        <mat-label>Select Country</mat-label>
+        <mat-select [formControlName]="'countryId'">
+          <mat-option *ngFor="let item of countries" [value]="item.countryId">
+            {{ item.countryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+     
+</div>
+<div class="row">
+    
+      <mat-form-field class="col">
+        <mat-label>Select state</mat-label>
+        <mat-select [formControlName]="'stateId'">
+           
+            <mat-option *ngFor="let item of states" [value]="item.stateId">
+              {{ item.stateName }}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Select City</mat-label>
+        <mat-select [formControlName]="'cityId'">
+            
+            <mat-option *ngFor="let item of cities" [value]="item.cityId">
+              {{ item.cityName }}
+            </mat-option>
+          
+          
+        </mat-select>
+      </mat-form-field>
+</div>
+<div class="row">
+ 
+    <mat-label>Enter Your Gender</mat-label>
+    <mat-radio-group [formControlName]="'gender'"  aria-label="Select an option">
+        <mat-radio-button [value]="1">Male</mat-radio-button>
+        <mat-radio-button [value]="2">Female</mat-radio-button>
+      </mat-radio-group>
+   
+      <mat-form-field class="col">
+        <mat-label>Pan Numver</mat-label>
+        <input [formControlName]="'panNo'" matInput name="panNo" >
+        <mat-error *ngIf="clientForm.get('panNo').hasError('required')">Pan Number  Is Required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControlName]="'dOB'">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+</div>
+<div class="col">
+  <mat-label>Upload File</mat-label>
+  <button mat-button (click)="fileUpload.click()">Choose File</button>
+  <input
+    type="file"
+    
+    id="fileUpload"
+    #fileUpload
+    (change)="onFileChange($event)"
+    hidden>
+  <mat-form-field >
+    <input
+      matInput
+      placeholder="File Name"
+      [value]="fileName"
+      readonly
+      [formControlName]="'fileUpload'">
+    <mat-error *ngIf="clientForm.get('fileUpload').hasError('required')">
+      Please upload a file
+    </mat-error>
+  </mat-form-field>
+
+  
+</div>
+
+<div class="row">
+  <button class="btn btn-primary" [disabled]="!clientForm.valid" (click)="addPower(clientForm.value)"   mat-raised-button>Basic</button>
+  <!-- disabled="!clientForm.invalid" -->
+  
+</div>
+</form>
